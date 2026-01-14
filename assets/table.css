@@ -1,10 +1,7 @@
-tfoot input {
-  font-size: 0.9em;
-  padding: 4px;
+.table-container table.dataTable tbody tr:hover {
+  background-color: #e0f2fe !important; /* Tailwind sky-100 */
 }
-
-[data-theme="dark"] tfoot input {
-  background: #0d1117;
-  color: #c9d1d9;
-  border: 1px solid #30363d;
+.table-container table.dataTable thead th {
+  background-color: #0ea5e9 !important; /* Tailwind sky-500 */
+  color: white !important;
 }
