@@ -1,0 +1,30 @@
+:root {
+  --bg: #ffffff;
+  --text: #24292f;
+  --link: #0366d6;
+  --header-bg: linear-gradient(120deg, #155799, #159957);
+  --table-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+  --bg: #0d1117;
+  --text: #c9d1d9;
+  --link: #58a6ff;
+  --header-bg: linear-gradient(120deg, #0a2e2a, #022c22);
+  --table-bg: #161b22;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.page-header {
+  background: var(--header-bg);
+}
+
+a { color: var(--link); }
+
+table {
+  background: var(--table-bg);
+}
