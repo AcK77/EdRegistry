@@ -1,54 +1,41 @@
-fetch('data/data.json')
-  .then(r => r.json())
-  .then(data => {
-    if (!data.length) return;
+$(document).ready(function() {
+  fetch('data/data.json')
+    .then(res => res.json())
+    .then(data => {
+      const columns = Object.keys(data[0] || {}).map(key => ({ title: key, data: key }));
 
-    const columns = Object.keys(data[0]).map(key => ({
-      title: key,
-      data: key
-    }));
+      $('#loader').hide();
+      $('#stats').removeClass('hidden');
+      $('#table-container').removeClass('hidden');
 
-    const table = $('#datatable').DataTable({
-      data,
-      columns,
-      pageLength: 25,
-      order: [],
-      responsive: true,
-      initComplete: function () {
-        this.api().columns().every(function () {
-          const column = this;
-          const input = document.createElement('input');
-          input.placeholder = 'Filtrer';
-          input.style.width = '100%';
+      const table = $('#datatable').DataTable({
+        data: data,
+        columns: columns,
+        pageLength: 25,
+        deferRender: true,
+        scrollY: '60vh',
+        scroller: true,
+        responsive: true
+      });
 
-          $(input).on('keyup change clear', function () {
-            column.search(this.value).draw();
-            updateStats(table);
-          });
+      $('#stats-total').text(data.length);
+      $('#stats-filtered').text(table.rows({ filter: 'applied' }).count());
 
-          $(column.footer()).empty().append(input);
-        });
-      }
+      const firstCol = columns[0].title;
+      const counts = {};
+      data.forEach(row => {
+        const val = row[firstCol] || '';
+        counts[val] = (counts[val] || 0) + 1;
+      });
+      const top5 = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,5);
+      $('#stats-top').html(top5.map(e => `<li>${e[0]} (${e[1]})</li>`).join(''));
+
+      table.on('search.dt', function() {
+        $('#stats-filtered').text(table.rows({ filter: 'applied' }).count());
+      });
+    })
+    .catch(err => {
+      $('#loader').html('<span class="text-red-500">Failed to load data</span>');
+      console.error(err);
     });
-
-    updateStats(table);
-  });
-
-function updateStats(table) {
-  document.getElementById('stats-total').textContent = table.data().count();
-  document.getElementById('stats-filtered').textContent =
-    table.rows({ filter: 'applied' }).count();
-
-  const col0 = table.column(0, { filter: 'applied' }).data().toArray();
-  const freq = {};
-  col0.forEach(v => freq[v] = (freq[v] || 0) + 1);
-
-  const top = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  const ul = document.getElementById('stats-top');
-  ul.innerHTML = '';
-  top.forEach(([k,v]) => {
-    const li = document.createElement('li');
-    li.textContent = `${k}: ${v}`;
-    ul.appendChild(li);
-  });
-}
+});
