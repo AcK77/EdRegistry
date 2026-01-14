@@ -1,0 +1,10 @@
+tfoot input {
+  font-size: 0.9em;
+  padding: 4px;
+}
+
+[data-theme="dark"] tfoot input {
+  background: #0d1117;
+  color: #c9d1d9;
+  border: 1px solid #30363d;
+}
