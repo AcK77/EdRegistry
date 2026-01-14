@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EdRegistry</title>
+
+  <!-- Tailwind + Flowbite CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.9.1/flowbite.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/dark.css">
+  <link rel="stylesheet" href="assets/table.css">
+
+</head>
+<body class="bg-white text-gray-800">
+
+  <!-- Header with Dark Mode toggle -->
+  <div class="flex justify-between items-center p-4 border-b border-gray-300 dark:border-gray-700">
+    <h1 class="text-3xl font-bold">EdRegistry</h1>
+    <button onclick="toggleTheme()" class="px-3 py-1 rounded border bg-gray-200 dark:bg-gray-700 border-gray-400 dark:border-gray-600">
+      🌓
+    </button>
+  </div>
+
+  <!-- Statistics -->
+  <div class="mx-4 my-4 p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
+    <h2 class="text-xl font-semibold mb-2">📊 Statistics</h2>
+    <p>Total rows: <span id="stats-total">0</span></p>
+    <p>Filtered rows: <span id="stats-filtered">0</span></p>
+
+    <h3 class="text-lg font-semibold mt-2">Top values (column 1)</h3>
+    <ul id="stats-top" class="list-disc ml-5"></ul>
+  </div>
+
+  <!-- Table -->
+  <div class="table-container mx-4 my-4 p-4 bg-white dark:bg-gray-900 rounded shadow overflow-x-auto">
+    <table id="datatable" class="stripe hover w-full" style="width:100%">
+      <thead></thead>
+      <tfoot></tfoot>
+    </table>
+  </div>
+
+  <!-- JS libs -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.9.1/flowbite.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="assets/dark.js"></script>
+  <script src="assets/table.js"></script>
+
+</body>
+</html>
