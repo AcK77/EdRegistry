@@ -1,17 +1,15 @@
 :root {
   --bg: #ffffff;
-  --text: #24292f;
-  --link: #0366d6;
-  --header-bg: linear-gradient(120deg, #155799, #159957);
-  --table-bg: #ffffff;
+  --text: #1f2937;
+  --card: #f9fafb;
+  --table-header: #e5e7eb;
 }
 
 [data-theme="dark"] {
-  --bg: #0d1117;
-  --text: #c9d1d9;
-  --link: #58a6ff;
-  --header-bg: linear-gradient(120deg, #0a2e2a, #022c22);
-  --table-bg: #161b22;
+  --bg: #0f172a;
+  --text: #e2e8f0;
+  --card: #1e293b;
+  --table-header: #334155;
 }
 
 body {
@@ -19,12 +17,12 @@ body {
   color: var(--text);
 }
 
-.page-header {
-  background: var(--header-bg);
+.table-container {
+  background: var(--card);
+  padding: 1rem;
+  border-radius: 0.5rem;
 }
 
-a { color: var(--link); }
-
-table {
-  background: var(--table-bg);
+.table-container table thead {
+  background: var(--table-header);
 }
