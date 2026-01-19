@@ -1,61 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>EdRegistry</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/slate/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-  <style>
-    body { padding: 2rem 0; }
-    .container-custom { max-width: 94vw; margin:auto; }
-    .description-text { font-size:1rem; opacity:.85; line-height:1.5; background:#222b36; padding:1rem; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,.3); }
-    .title-white { color:#fff; }
-    .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_length { margin-bottom:0; }
-    .dataTables_wrapper .row.mb-3 { display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center; }
-    table.dataTable th, table.dataTable td { white-space: nowrap; }
-    table.dataTable tbody tr:hover { background-color:#3a4f7a !important; }
-    .card, .stat-card, .chart-card { box-shadow:0 4px 8px rgba(0,0,0,.3); border:none; border-radius:8px; background:#222b36; color:#fff; }
-    .stat-card { padding:.6rem .8rem; height:100%; }
-    .stat-title { font-size:.95rem; opacity:.85; margin-bottom:.2rem; font-weight:bold; }
-    .stat-value { font-size:.85rem; font-weight:normal; list-style-type: disc; margin-left:1rem; }
-    .stat-more { font-size:.7rem; font-style:italic; color:#aaa; margin-left:1rem; }
-    .chart-container { margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
-    .chart-card { flex:1 1 calc(25% - 1rem); }
-    canvas { background:#222b36; border-radius:8px; padding:5px; height:120px !important; }
-    footer { margin-top:4rem; padding-top:1rem; border-top:1px solid #445; font-size:.9rem; opacity:.8; }
-    footer a { color:#fff; text-decoration:underline; }
-  </style>
+<meta charset="UTF-8">
+<title>EdRegistry</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/slate/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<style>
+  body { padding:2rem 0; background:#32383e; }
+  .container-custom { max-width:94vw; margin:auto; }
+  .description-text { font-size:1rem; opacity:.85; line-height:1.5; background:#32383e; padding:1rem; border-radius:.5rem; }
+  .title-white { color:#fff; }
+  .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_length { margin-bottom:0; }
+  .dataTables_wrapper .row.mb-3 { display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center; }
+  table.dataTable th, table.dataTable td { white-space: nowrap; }
+  table.dataTable tbody tr:hover { background-color:#3a4f7a !important; }
+  .chart-container { margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+  .chart-card { flex:1 1 calc(25% - 1rem); background:#32383e; border:none; border-radius:.5rem; padding:.5rem; color:#fff; box-shadow:0 4px 8px rgba(0,0,0,.3); }
+  canvas { background:#32383e; border-radius:.5rem; width:100% !important; height:220px !important; }
+  footer { margin-top:4rem; padding-top:1rem; border-top:1px solid #445; font-size:.9rem; opacity:.8; }
+  footer a { color:#fff; text-decoration:underline; }
+</style>
 </head>
 <body>
 
 <div class="container-custom">
 
-  <h1 class="mb-3 title-white">EdRegistry</h1>
+<h1 class="mb-3 title-white">EdRegistry</h1>
 
-  <div class="description-text">
-    EdRegistry is a dynamic, interactive registry of EdFiles used in LEGO TTGames titles.<br>
-    The data displayed here is generated from GitHub sources and curated by <strong>JayFranco</strong> using a custom serializer.<br>
-    Explore file types, categories, and structures with search and filtering tools.
+<div class="description-text">
+  EdRegistry is a dynamic, interactive registry of EdFiles used in LEGO TTGames titles.<br>
+  The data displayed here is generated from GitHub sources and curated by <strong>JayFranco</strong> using a custom serializer.<br>
+  Explore file types, categories, and structures with search and filtering tools.
+</div>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <table id="datatable" class="table table-striped table-hover w-100">
+      <thead></thead>
+    </table>
   </div>
+</div>
 
-  <div class="card mt-4">
-    <div class="card-body">
-      <table id="datatable" class="table table-striped table-hover w-100">
-        <thead></thead>
-      </table>
-    </div>
-  </div>
+<div class="row chart-container" id="charts-container"></div>
 
-  <div class="row g-3 mt-4" id="stats-container"></div>
-
-  <div class="row chart-container" id="charts-container"></div>
-
-  <footer class="text-center mt-5">
-    <p class="mb-1">Made with ❤️ by <strong>AcK</strong> & <strong>JayFranco</strong></p>
-    <p class="mb-1"><a href="https://github.com/AcK77/EdRegistry" target="_blank">GitHub Repository</a></p>
-    <p class="mb-0">This site is not affiliated with LEGO or TTGames. Generated in 2026.</p>
-  </footer>
+<footer class="text-center mt-5">
+  <p class="mb-1">Made with ❤️ by <strong>AcK</strong> & <strong>JayFranco</strong></p>
+  <p class="mb-1"><a href="https://github.com/AcK77/EdRegistry" target="_blank">GitHub Repository</a></p>
+  <p class="mb-0">This site is not affiliated with LEGO or TTGames. Generated in 2026.</p>
+</footer>
 
 </div>
 
@@ -68,99 +61,66 @@
 
 <script>
 fetch('data/data.json')
-  .then(res => res.json())
-  .then(data => {
-    const columnNames = Object.keys(data[0]);
-    const columns = columnNames.map(k => ({ title: k, data: k }));
-    const statsColumns = columnNames.slice(0, 4);
-    const statsContainer = document.getElementById('stats-container');
-    const chartsContainer = document.getElementById('charts-container');
+.then(res=>res.json())
+.then(data=>{
+  const columnNames = Object.keys(data[0]);
+  const columns = columnNames.map(k=>({ title:k,data:k }));
+  const statsColumns = columnNames.slice(0,4);
+  const chartsContainer = document.getElementById('charts-container');
 
-    function computeStats(rows) {
-      statsContainer.innerHTML = '';
-      chartsContainer.innerHTML = '';
-
-      statsColumns.forEach(col => {
-        const counts = {};
-        rows.forEach(r => {
-          const v = r[col] || '(empty)';
-          counts[v] = (counts[v] || 0) + 1;
-        });
-
-        const top = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
-        const htmlTop = top.slice(0,5)
-          .map(t => `<div class="stat-value">&#8226; ${t[0]} <span class="opacity-75">(${t[1]})</span></div>`).join('');
-        const more = top.length>5?`<div class="stat-more">more...</div>`:'';
-        const html = `
-          <div class="col-md-3">
-            <div class="stat-card">
-              <div class="stat-title">${col}</div>
-              ${htmlTop}${more}
-            </div>
-          </div>`;
-        statsContainer.insertAdjacentHTML('beforeend', html);
-
-        const chartId = `chart-${col}`;
-        const chartHtml = `<div class="chart-card"><canvas id="${chartId}"></canvas></div>`;
-        chartsContainer.insertAdjacentHTML('beforeend', chartHtml);
-
-        const ctx = document.getElementById(chartId).getContext('2d');
-        const bgColors = ['#007bff','#17a2b8','#28a745','#ffc107','#fd7e14','#6f42c1','#dc3545','#20c997','#6610f2','#e83e8c'];
-        new Chart(ctx, {
-          type: 'pie',
-          data: {
-            labels: top.slice(0,10).map(t=>t[0]),
-            datasets: [{
-              label: col,
-              data: top.slice(0,10).map(t=>t[1]),
-              backgroundColor: bgColors,
-              borderColor: '#222b36',
-              borderWidth: 1
-            }]
-          },
-          options: {
-            responsive:true,
-            plugins:{
-              legend:{labels:{color:'#fff'}},
-              tooltip:{callbacks:{
-                label:function(context){
-                  const val=context.raw;
-                  const sum=context.chart._metasets[0].total;
-                  const perc=((val/sum)*100).toFixed(1);
-                  return `${context.label}: ${val} (${perc}%)`;
-                }
-              }}
-            }
-          }
-        });
-
-      });
-    }
-
-    computeStats(data);
-
-    const table = $('#datatable').DataTable({
-      data: data,
-      columns: columns,
-      pageLength: 100,
-      lengthMenu: [50,100,250,500],
-      deferRender:true,
-      scrollY:'65vh',
-      scrollX:true,
-      scroller:true,
-      order:[],
-      autoWidth:false,
-      dom: "<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>"+
-           "<'row'<'col-12'tr>>"+
-           "<'row mt-3'<'col-md-5'i><'col-md-7 text-end'p>>",
-      language:{search:"Search:",lengthMenu:"Show _MENU_ entries",info:"Showing _START_ to _END_ of _TOTAL_ entries"}
+  statsColumns.forEach(col=>{
+    const counts = {};
+    data.forEach(r=>{
+      const v=r[col]||'(empty)';
+      counts[v]=(counts[v]||0)+1;
     });
+    const top = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
 
-    table.on('search.dt draw', function() {
-      const filtered = table.rows({filter:'applied'}).data().toArray();
-      computeStats(filtered);
+    const chartId=`chart-${col}`;
+    const chartHtml=`<div class="chart-card"><canvas id="${chartId}"></canvas></div>`;
+    chartsContainer.insertAdjacentHTML('beforeend',chartHtml);
+
+    const ctx=document.getElementById(chartId).getContext('2d');
+    const labels=top.slice(0,10).map(t=>`${t[0]} (${t[1]})`);
+    const dataValues=top.slice(0,10).map(t=>t[1]);
+    const bgColors=['#007bff','#17a2b8','#28a745','#ffc107','#fd7e14','#6f42c1','#dc3545','#20c997','#6610f2','#e83e8c'];
+
+    new Chart(ctx,{
+      type:'pie',
+      data:{labels:labels,datasets:[{label:col,data:dataValues,backgroundColor:bgColors,borderColor:'#32383e',borderWidth:1}]},
+      options:{
+        responsive:true,
+        plugins:{
+          legend:{display:true,position:'bottom',labels:{color:'#fff',boxWidth:15, padding:10}},
+          tooltip:{callbacks:{
+            label:function(context){ return context.label; }
+          }}
+        }
+      }
     });
   });
+
+  const table=$('#datatable').DataTable({
+    data:data,
+    columns:columns,
+    pageLength:100,
+    lengthMenu:[50,100,250,500],
+    deferRender:true,
+    scrollY:'65vh',
+    scrollX:true,
+    scroller:true,
+    order:[],
+    autoWidth:false,
+    dom:"<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>"+
+        "<'row'<'col-12'tr>>"+
+        "<'row mt-3'<'col-md-5'i><'col-md-7 text-end'p>>",
+    language:{search:"Search:",lengthMenu:"Show _MENU_ entries",info:"Showing _START_ to _END_ of _TOTAL_ entries"}
+  });
+
+  table.on('search.dt draw',function(){
+    const filtered=table.rows({filter:'applied'}).data().toArray();
+  });
+});
 </script>
 
 </body>
