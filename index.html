@@ -9,19 +9,21 @@
   <style>
     body { padding: 2rem 0; }
     .container-custom { max-width: 94vw; margin:auto; }
-    .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_length { margin-bottom: 0; }
+    .description-text { font-size:1rem; opacity:.85; line-height:1.5; background:#2c3e50; padding:1rem; border-radius:8px; }
+    .title-white { color:#fff; }
+    .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_length { margin-bottom:0; }
     .dataTables_wrapper .row.mb-3 { display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center; }
     table.dataTable th, table.dataTable td { white-space: nowrap; }
-    table.dataTable tbody tr:hover { background-color: #3a4f7a !important; }
-    .stat-card { background:#343a40; border-radius:8px; padding:.6rem .8rem; height:100%; color:#fff; }
-    .stat-title { font-size:.75rem; opacity:.8; }
-    .stat-value { font-size:.9rem; font-weight: normal; }
+    table.dataTable tbody tr:hover { background-color:#3a4f7a !important; }
+    .card, .stat-card, .chart-card { box-shadow:0 4px 8px rgba(0,0,0,.3); border:none; border-radius:8px; background:#1e1e1e; color:#fff; }
+    .stat-card { padding:.6rem .8rem; height:100%; }
+    .stat-title { font-size:.7rem; opacity:.8; margin-bottom:.2rem; }
+    .stat-value { font-size:.9rem; font-weight:normal; }
+    .stat-more { font-size:.7rem; font-style:italic; color:#aaa; }
+    .chart-container { margin-top:2rem; }
+    canvas { background:#1e1e1e; border-radius:8px; padding:5px; }
     footer { margin-top:4rem; padding-top:1rem; border-top:1px solid #445; font-size:.9rem; opacity:.8; }
     footer a { color:#fff; text-decoration:underline; }
-    .description-text { font-size:1rem; opacity:.85; line-height:1.5; }
-    .title-white { color:#fff; }
-    .chart-container { margin-top:2rem; }
-    canvas { background:#1e1e1e; border-radius:8px; padding:10px; }
   </style>
 </head>
 <body>
@@ -30,7 +32,7 @@
 
   <h1 class="mb-3 title-white">EdRegistry</h1>
 
-  <div class="alert alert-secondary description-text">
+  <div class="description-text">
     EdRegistry is a dynamic, interactive registry of EdFiles used in LEGO TTGames titles.<br>
     The data displayed here is generated from GitHub sources and curated by <strong>JayFranco</strong> using a custom serializer.<br>
     Explore file types, categories, and structures with search and filtering tools.
@@ -86,9 +88,8 @@ fetch('data/data.json')
 
         const top = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
         const htmlTop = top.slice(0,5)
-          .map(t => `<div class="stat-value">${t[0]} <span class="opacity-75">(${t[1]})</span></div>`)
-          .join('');
-        const more = top.length>5?`<div class="stat-value">more...</div>`:'';
+          .map(t => `<div class="stat-value">${t[0]} <span class="opacity-75">(${t[1]})</span></div>`).join('');
+        const more = top.length>5?`<div class="stat-more">more...</div>`:'';
         const html = `
           <div class="col-md-3">
             <div class="stat-card">
@@ -104,9 +105,7 @@ fetch('data/data.json')
         chartsContainer.insertAdjacentHTML('beforeend', chartHtml);
 
         const ctx = document.getElementById(chartId).getContext('2d');
-        const bgColors = [
-          '#007bff','#28a745','#ffc107','#dc3545','#17a2b8','#6f42c1','#fd7e14','#20c997','#6610f2','#e83e8c'
-        ];
+        const bgColors = ['#007bff','#17a2b8','#28a745','#ffc107','#fd7e14','#6f42c1','#dc3545','#20c997','#6610f2','#e83e8c'];
         new Chart(ctx, {
           type: 'pie',
           data: {
@@ -114,17 +113,20 @@ fetch('data/data.json')
             datasets: [{
               label: col,
               data: top.slice(0,10).map(t=>t[1]),
-              backgroundColor: bgColors
+              backgroundColor: bgColors,
+              borderColor: '#1e1e1e',
+              borderWidth: 1
             }]
           },
           options: {
-            plugins: {
-              legend: { labels: { color: '#fff' } },
-              tooltip: { callbacks: {
-                label: function(context) {
-                  const val = context.raw;
-                  const sum = context.chart._metasets[0].total;
-                  const perc = ((val/sum)*100).toFixed(1);
+            responsive:true,
+            plugins:{
+              legend:{labels:{color:'#fff'}},
+              tooltip:{callbacks:{
+                label:function(context){
+                  const val=context.raw;
+                  const sum=context.chart._metasets[0].total;
+                  const perc=((val/sum)*100).toFixed(1);
                   return `${context.label}: ${val} (${perc}%)`;
                 }
               }}
