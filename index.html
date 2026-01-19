@@ -16,8 +16,7 @@ body { padding:2rem 0; background:#272b30; }
 table.dataTable th, table.dataTable td { white-space: nowrap; }
 table.dataTable tbody tr:hover { background-color:#3a4f7a !important; }
 .card { box-shadow:0 4px 8px rgba(0,0,0,.3); border:none; border-radius:.5rem; background:#32383e; color:#fff; }
-.chart-container { margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:flex-start; }
-.chart-card { flex:1 1 0; min-width:0; display:flex; flex-direction:column; border-radius:.5rem; box-shadow:0 4px 8px rgba(0,0,0,.3); background:#32383e; color:#fff; }
+.chart-card { display:flex; flex-direction:column; border-radius:.5rem; box-shadow:0 4px 8px rgba(0,0,0,.3); background:#32383e; color:#fff; height:100%; }
 .chart-card-header { font-weight:bold; padding:.5rem 1rem; border-bottom:1px solid rgba(255,255,255,.1); }
 .chart-card-body { padding:.5rem 1rem; display:flex; align-items:center; justify-content:center; }
 canvas { width:200px !important; height:200px !important; }
@@ -47,7 +46,7 @@ footer a { color:#fff; text-decoration:underline; }
   </div>
 </div>
 
-<div class="row chart-container" id="charts-container"></div>
+<div class="row g-3 mt-4" id="charts-container"></div>
 
 <footer class="text-center mt-5">
   <p class="mb-1">Made with ❤️ by <strong>AcK</strong> & <strong>JayFranco</strong></p>
