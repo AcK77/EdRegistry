@@ -7,24 +7,24 @@
 <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/slate/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 <style>
-  body { padding:2rem 0; background:#272b30; }
-  .container-custom { max-width:94vw; margin:auto; }
-  .description-text { font-size:1rem; opacity:.85; line-height:1.5; background:#32383e; padding:1rem; border-radius:.5rem; }
-  .title-white { color:#fff; }
-  .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_length { margin-bottom:0; }
-  .dataTables_wrapper .row.mb-3 { display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center; }
-  table.dataTable th, table.dataTable td { white-space: nowrap; }
-  table.dataTable tbody tr:hover { background-color:#3a4f7a !important; }
-  .card, .chart-card { box-shadow:0 4px 8px rgba(0,0,0,.3); border:none; border-radius:.5rem; background:#32383e; color:#fff; }
-  .chart-container { margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:flex-start; }
-  .chart-card { flex:1 1 calc(25% - 1rem); display:flex; flex-direction:column; }
-  .chart-card-header { font-weight:bold; padding:.5rem 1rem; border-bottom:1px solid rgba(255,255,255,.1); }
-  .chart-card-body { padding:.5rem 1rem; display:flex; align-items:center; justify-content:center; }
-  canvas { width:200px !important; height:200px !important; }
-  .chart-card-footer { padding:.5rem 1rem; font-size:.8rem; color:#ccc; border-top:1px solid rgba(255,255,255,.1); text-align:center; }
-  .chart-card-footer span.count { font-style:italic; font-size:.7rem; color:#999; margin-left:2px; }
-  footer { margin-top:4rem; padding-top:1rem; border-top:1px solid #445; font-size:.9rem; opacity:.8; }
-  footer a { color:#fff; text-decoration:underline; }
+body { padding:2rem 0; background:#272b30; }
+.container-custom { max-width:94vw; margin:auto; }
+.description-text { font-size:1rem; opacity:.85; line-height:1.5; background:#32383e; padding:1rem; border-radius:.5rem; box-shadow:0 4px 8px rgba(0,0,0,.3); }
+.title-white { color:#fff; }
+.dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_length { margin-bottom:0; }
+.dataTables_wrapper .row.mb-3 { display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center; }
+table.dataTable th, table.dataTable td { white-space: nowrap; }
+table.dataTable tbody tr:hover { background-color:#3a4f7a !important; }
+.card, .chart-card { box-shadow:0 4px 8px rgba(0,0,0,.3); border:none; border-radius:.5rem; background:#32383e; color:#fff; }
+.chart-container { margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:flex-start; }
+.chart-card { flex:1 1 calc(25% - 1rem); display:flex; flex-direction:column; min-width:220px; }
+.chart-card-header { font-weight:bold; padding:.5rem 1rem; border-bottom:1px solid rgba(255,255,255,.1); }
+.chart-card-body { padding:.5rem 1rem; display:flex; align-items:center; justify-content:center; }
+canvas { width:200px !important; height:200px !important; }
+.chart-card-footer { padding:.5rem 1rem; font-size:.8rem; color:#ccc; border-top:1px solid rgba(255,255,255,.1); text-align:center; }
+.chart-card-footer span.count { font-style:italic; font-size:.7rem; color:#999; margin-left:2px; }
+footer { margin-top:4rem; padding-top:1rem; border-top:1px solid #445; font-size:.9rem; opacity:.8; }
+footer a { color:#fff; text-decoration:underline; }
 </style>
 </head>
 <body>
@@ -41,7 +41,7 @@
 
 <div class="card mt-4">
   <div class="card-body">
-    <table id="datatable" class="table table-striped table-hover w-100">
+    <table id="datatable" class="table table-striped table-hover table-dark w-100">
       <thead></thead>
     </table>
   </div>
@@ -83,7 +83,7 @@ fetch('data/data.json')
 
     const chartId=`chart-${col}`;
     const chartHtml=`
-      <div class="col-md-3 col-sm-6 col-12">
+      <div class="col-lg-3 col-md-6 col-12">
         <div class="chart-card">
           <div class="chart-card-header">${col}</div>
           <div class="chart-card-body"><canvas id="${chartId}"></canvas></div>
