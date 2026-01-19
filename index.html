@@ -10,41 +10,50 @@
     body {
       padding: 2rem 0;
     }
+
     .container-custom {
       max-width: 94vw;
       margin: auto;
     }
+
     .dataTables_wrapper .dataTables_filter,
     .dataTables_wrapper .dataTables_length {
       margin-bottom: 0;
     }
+
     .dataTables_wrapper .row.mb-3 {
       display: flex;
       flex-wrap: nowrap;
       justify-content: space-between;
       align-items: center;
     }
+
     table.dataTable th,
     table.dataTable td {
       white-space: nowrap;
     }
+
     table.dataTable tbody tr:hover {
       background-color: #3a4f7a !important;
     }
+
     .stat-card {
-      background: #1e2a3a;
+      background: #2c3e50;
       border-radius: 8px;
       padding: .6rem .8rem;
       height: 100%;
     }
+
     .stat-title {
       font-size: .75rem;
       opacity: .8;
     }
+
     .stat-value {
       font-size: 1rem;
       font-weight: bold;
     }
+
     footer {
       margin-top: 4rem;
       padding-top: 1rem;
@@ -52,14 +61,18 @@
       font-size: .9rem;
       opacity: .8;
     }
+
     footer a {
       color: #fff;
       text-decoration: underline;
     }
+
     .description-text {
       font-size: 1rem;
       opacity: .85;
+      line-height: 1.5;
     }
+
     .title-white {
       color: #fff;
     }
@@ -67,103 +80,103 @@
 </head>
 <body>
 
-<div class="container-custom">
+  <div class="container-custom">
 
-  <h1 class="mb-3 title-white">EdRegistry</h1>
+    <h1 class="mb-3 title-white">EdRegistry</h1>
 
-  <div class="alert alert-secondary description-text">
-    EdRegistry is a dynamic, interactive registry of EdFiles used in LEGO TTGames titles.
-    The data displayed here is generated from GitHub sources and curated by <strong>JayFrancoe</strong> using a custom serializer.
-    Explore file types, categories, and structures with search and filtering tools.
-  </div>
-
-  <div class="card mt-4">
-    <div class="card-body">
-      <table id="datatable" class="table table-striped table-hover w-100">
-        <thead></thead>
-      </table>
+    <div class="alert alert-secondary description-text">
+      EdRegistry is a dynamic, interactive registry of EdFiles used in LEGO TTGames titles.<br>
+      The data displayed here is generated from GitHub sources and curated by <strong>JayFranco</strong> using a custom serializer.<br>
+      You can explore file types, categories, and structures, and filter or search them efficiently.
     </div>
+
+    <div class="card mt-4">
+      <div class="card-body">
+        <table id="datatable" class="table table-striped table-hover w-100">
+          <thead></thead>
+        </table>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-4" id="stats-container"></div>
+
+    <footer class="text-center mt-5">
+      <p class="mb-1">Made with ❤️ by <strong>AcK</strong> & <strong>JayFranco</strong></p>
+      <p class="mb-1"><a href="https://github.com/AcK77/EdRegistry" target="_blank">GitHub Repository</a></p>
+      <p class="mb-0">This site is not affiliated with LEGO or TTGames. Generated in 2026.</p>
+    </footer>
+
   </div>
 
-  <div class="row g-3 mt-4" id="stats-container"></div>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
-  <footer class="text-center mt-5">
-    <p class="mb-1">Made with ❤️ by <strong>AcK</strong> & <strong>JayFrancoe</strong></p>
-    <p class="mb-1"><a href="https://github.com/AcK77/EdRegistry" target="_blank">GitHub Repository</a></p>
-    <p class="mb-0">This site is not affiliated with LEGO or TTGames. Generated in 2026.</p>
-  </footer>
+  <script>
+    fetch('data/data.json')
+      .then(res => res.json())
+      .then(data => {
+        const columnNames = Object.keys(data[0]);
+        const columns = columnNames.map(k => ({ title: k, data: k }));
+        const statsColumns = columnNames.slice(0, 4);
+        const statsContainer = document.getElementById('stats-container');
 
-</div>
+        function computeStats(rows) {
+          statsContainer.innerHTML = '';
+          statsColumns.forEach(col => {
+            const counts = {};
+            rows.forEach(r => {
+              const v = r[col] || '(empty)';
+              counts[v] = (counts[v] || 0) + 1;
+            });
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-
-<script>
-  fetch('data/data.json')
-    .then(res => res.json())
-    .then(data => {
-      const columnNames = Object.keys(data[0]);
-      const columns = columnNames.map(k => ({ title: k, data: k }));
-      const statsColumns = columnNames.slice(0, 4);
-      const statsContainer = document.getElementById('stats-container');
-
-      function computeStats(rows) {
-        statsContainer.innerHTML = '';
-        statsColumns.forEach(col => {
-          const counts = {};
-          rows.forEach(r => {
-            const v = r[col] || '(empty)';
-            counts[v] = (counts[v] || 0) + 1;
+            const top = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+            const htmlTop = top.slice(0, 5)
+              .map(t => `<div class="stat-value">${t[0]} <span class="opacity-75">(${t[1]})</span></div>`)
+              .join('');
+            const more = top.length > 5 ? `<div class="stat-value">more...</div>` : '';
+            const html = `
+              <div class="col-md-3">
+                <div class="stat-card">
+                  <div class="stat-title">${col}</div>
+                  ${htmlTop}${more}
+                </div>
+              </div>`;
+            statsContainer.insertAdjacentHTML('beforeend', html);
           });
-
-          const top = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-          const htmlTop = top.slice(0, 5)
-            .map(t => `<div class="stat-value">${t[0]} <span class="opacity-75">(${t[1]})</span></div>`)
-            .join('');
-          const more = top.length > 5 ? `<div class="stat-value">more...</div>` : '';
-          const html = `
-            <div class="col-md-3">
-              <div class="stat-card">
-                <div class="stat-title">${col}</div>
-                ${htmlTop}${more}
-              </div>
-            </div>`;
-          statsContainer.insertAdjacentHTML('beforeend', html);
-        });
-      }
-
-      computeStats(data);
-
-      const table = $('#datatable').DataTable({
-        data: data,
-        columns: columns,
-        pageLength: 100,
-        lengthMenu: [50, 100, 250, 500],
-        deferRender: true,
-        scrollY: '65vh',
-        scrollX: true,
-        scroller: true,
-        order: [],
-        autoWidth: false,
-        dom: "<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>" +
-             "<'row'<'col-12'tr>>" +
-             "<'row mt-3'<'col-md-5'i><'col-md-7 text-end'p>>",
-        language: {
-          search: "Search:",
-          lengthMenu: "Show _MENU_ entries",
-          info: "Showing _START_ to _END_ of _TOTAL_ entries"
         }
-      });
 
-      table.on('search.dt draw', function() {
-        const filtered = table.rows({ filter: 'applied' }).data().toArray();
-        computeStats(filtered);
+        computeStats(data);
+
+        const table = $('#datatable').DataTable({
+          data: data,
+          columns: columns,
+          pageLength: 100,
+          lengthMenu: [50, 100, 250, 500],
+          deferRender: true,
+          scrollY: '65vh',
+          scrollX: true,
+          scroller: true,
+          order: [],
+          autoWidth: false,
+          dom: "<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>" +
+               "<'row'<'col-12'tr>>" +
+               "<'row mt-3'<'col-md-5'i><'col-md-7 text-end'p>>",
+          language: {
+            search: "Search:",
+            lengthMenu: "Show _MENU_ entries",
+            info: "Showing _START_ to _END_ of _TOTAL_ entries"
+          }
+        });
+
+        table.on('search.dt draw', function() {
+          const filtered = table.rows({ filter: 'applied' }).data().toArray();
+          computeStats(filtered);
+        });
       });
-    });
-</script>
+  </script>
 
 </body>
 </html>
