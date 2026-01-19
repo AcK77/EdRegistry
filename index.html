@@ -15,12 +15,14 @@
   .dataTables_wrapper .row.mb-3 { display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center; }
   table.dataTable th, table.dataTable td { white-space: nowrap; }
   table.dataTable tbody tr:hover { background-color:#3a4f7a !important; }
+  .card, .chart-card { box-shadow:0 4px 8px rgba(0,0,0,.3); border:none; border-radius:.5rem; background:#32383e; color:#fff; }
   .chart-container { margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:flex-start; }
-  .chart-card { flex:1 1 calc(25% - 1rem); background:#32383e; border:none; border-radius:.5rem; color:#fff; box-shadow:0 4px 8px rgba(0,0,0,.3); display:flex; flex-direction:column; }
+  .chart-card { flex:1 1 calc(25% - 1rem); display:flex; flex-direction:column; }
   .chart-card-header { font-weight:bold; padding:.5rem 1rem; border-bottom:1px solid rgba(255,255,255,.1); }
-  .chart-card-body { padding:.5rem 1rem; flex:1; display:flex; align-items:center; justify-content:center; }
-  canvas { width:100% !important; height:180px !important; }
+  .chart-card-body { padding:.5rem 1rem; display:flex; align-items:center; justify-content:center; }
+  canvas { width:200px !important; height:200px !important; }
   .chart-card-footer { padding:.5rem 1rem; font-size:.8rem; color:#ccc; border-top:1px solid rgba(255,255,255,.1); text-align:center; }
+  .chart-card-footer span.count { font-style:italic; font-size:.7rem; color:#999; margin-left:2px; }
   footer { margin-top:4rem; padding-top:1rem; border-top:1px solid #445; font-size:.9rem; opacity:.8; }
   footer a { color:#fff; text-decoration:underline; }
 </style>
@@ -85,7 +87,9 @@ fetch('data/data.json')
         <div class="chart-card">
           <div class="chart-card-header">${col}</div>
           <div class="chart-card-body"><canvas id="${chartId}"></canvas></div>
-          <div class="chart-card-footer">${top.slice(0,10).map(t=>t[0]+" ("+t[1]+")").join(", ")}</div>
+          <div class="chart-card-footer">
+            ${top.slice(0,10).map(t=>`${t[0]}<span class="count">(${t[1]})</span>`).join(", ")}
+          </div>
         </div>
       </div>`;
     chartsContainer.insertAdjacentHTML('beforeend',chartHtml);
@@ -100,6 +104,8 @@ fetch('data/data.json')
       data:{labels:labels,datasets:[{data:dataValues,backgroundColor:bgColors,borderColor:'#272b30',borderWidth:1}]},
       options:{
         responsive:true,
+        maintainAspectRatio:true,
+        aspectRatio:1,
         plugins:{
           legend:{display:false},
           tooltip:{callbacks:{label:function(context){return context.label+": "+context.raw;}}}
