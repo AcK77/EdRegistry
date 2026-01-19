@@ -7,21 +7,21 @@
   <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/slate/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
   <style>
-    body { padding: 2rem 0; }
+    body { padding: 2rem 0; background:#1b1e23; }
     .container-custom { max-width: 94vw; margin:auto; }
-    .description-text { font-size:1rem; opacity:.85; line-height:1.5; background:#1e1e1e; padding:1rem; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,.3); }
+    .description-text { font-size:1rem; opacity:.85; line-height:1.5; background:#222; padding:1rem; border-radius:8px; box-shadow:0 4px 8px rgba(0,0,0,.3); }
     .title-white { color:#fff; }
     .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_length { margin-bottom:0; }
     .dataTables_wrapper .row.mb-3 { display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center; }
     table.dataTable th, table.dataTable td { white-space: nowrap; }
     table.dataTable tbody tr:hover { background-color:#3a4f7a !important; }
-    .card, .stat-card, .chart-card { box-shadow:0 4px 8px rgba(0,0,0,.3); border:none; border-radius:8px; background:#1e1e1e; color:#fff; }
+    .card, .stat-card, .chart-card { box-shadow:0 4px 8px rgba(0,0,0,.3); border:none; border-radius:8px; background:#222; color:#fff; }
     .stat-card { padding:.6rem .8rem; height:100%; }
-    .stat-title { font-size:.7rem; opacity:.8; margin-bottom:.2rem; }
-    .stat-value { font-size:.9rem; font-weight:normal; }
+    .stat-title { font-size:.95rem; opacity:.85; margin-bottom:.2rem; font-weight:bold; }
+    .stat-value { font-size:.85rem; font-weight:normal; }
     .stat-more { font-size:.7rem; font-style:italic; color:#aaa; }
-    .chart-container { margin-top:2rem; }
-    canvas { background:#1e1e1e; border-radius:8px; padding:5px; }
+    .chart-container { margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
+    canvas { background:#222; border-radius:8px; padding:5px; flex:1 1 calc(25% - 1rem); height:150px !important; }
     footer { margin-top:4rem; padding-top:1rem; border-top:1px solid #445; font-size:.9rem; opacity:.8; }
     footer a { color:#fff; text-decoration:underline; }
   </style>
@@ -99,9 +99,8 @@ fetch('data/data.json')
           </div>`;
         statsContainer.insertAdjacentHTML('beforeend', html);
 
-        // Pie chart
         const chartId = `chart-${col}`;
-        const chartHtml = `<div class="col-md-6 mt-3"><canvas id="${chartId}" height="150"></canvas></div>`;
+        const chartHtml = `<div class="chart-card"><canvas id="${chartId}"></canvas></div>`;
         chartsContainer.insertAdjacentHTML('beforeend', chartHtml);
 
         const ctx = document.getElementById(chartId).getContext('2d');
@@ -114,7 +113,7 @@ fetch('data/data.json')
               label: col,
               data: top.slice(0,10).map(t=>t[1]),
               backgroundColor: bgColors,
-              borderColor: '#1e1e1e',
+              borderColor: '#222',
               borderWidth: 1
             }]
           },
