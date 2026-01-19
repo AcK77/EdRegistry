@@ -7,7 +7,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/slate/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 <style>
-  body { padding:2rem 0; background:#32383e; }
+  body { padding:2rem 0; background:#272b30; }
   .container-custom { max-width:94vw; margin:auto; }
   .description-text { font-size:1rem; opacity:.85; line-height:1.5; background:#32383e; padding:1rem; border-radius:.5rem; }
   .title-white { color:#fff; }
@@ -15,9 +15,12 @@
   .dataTables_wrapper .row.mb-3 { display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center; }
   table.dataTable th, table.dataTable td { white-space: nowrap; }
   table.dataTable tbody tr:hover { background-color:#3a4f7a !important; }
-  .chart-container { margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between; }
-  .chart-card { flex:1 1 calc(25% - 1rem); background:#32383e; border:none; border-radius:.5rem; padding:.5rem; color:#fff; box-shadow:0 4px 8px rgba(0,0,0,.3); }
-  canvas { background:#32383e; border-radius:.5rem; width:100% !important; height:220px !important; }
+  .chart-container { margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:flex-start; }
+  .chart-card { flex:1 1 calc(25% - 1rem); background:#32383e; border:none; border-radius:.5rem; color:#fff; box-shadow:0 4px 8px rgba(0,0,0,.3); display:flex; flex-direction:column; }
+  .chart-card-header { font-weight:bold; padding:.5rem 1rem; border-bottom:1px solid rgba(255,255,255,.1); }
+  .chart-card-body { padding:.5rem 1rem; flex:1; display:flex; align-items:center; justify-content:center; }
+  canvas { width:100% !important; height:180px !important; }
+  .chart-card-footer { padding:.5rem 1rem; font-size:.8rem; color:#ccc; border-top:1px solid rgba(255,255,255,.1); text-align:center; }
   footer { margin-top:4rem; padding-top:1rem; border-top:1px solid #445; font-size:.9rem; opacity:.8; }
   footer a { color:#fff; text-decoration:underline; }
 </style>
@@ -77,24 +80,29 @@ fetch('data/data.json')
     const top = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
 
     const chartId=`chart-${col}`;
-    const chartHtml=`<div class="chart-card"><canvas id="${chartId}"></canvas></div>`;
+    const chartHtml=`
+      <div class="col-md-3 col-sm-6 col-12">
+        <div class="chart-card">
+          <div class="chart-card-header">${col}</div>
+          <div class="chart-card-body"><canvas id="${chartId}"></canvas></div>
+          <div class="chart-card-footer">${top.slice(0,10).map(t=>t[0]+" ("+t[1]+")").join(", ")}</div>
+        </div>
+      </div>`;
     chartsContainer.insertAdjacentHTML('beforeend',chartHtml);
 
     const ctx=document.getElementById(chartId).getContext('2d');
-    const labels=top.slice(0,10).map(t=>`${t[0]} (${t[1]})`);
+    const labels=top.slice(0,10).map(t=>t[0]);
     const dataValues=top.slice(0,10).map(t=>t[1]);
     const bgColors=['#007bff','#17a2b8','#28a745','#ffc107','#fd7e14','#6f42c1','#dc3545','#20c997','#6610f2','#e83e8c'];
 
     new Chart(ctx,{
       type:'pie',
-      data:{labels:labels,datasets:[{label:col,data:dataValues,backgroundColor:bgColors,borderColor:'#32383e',borderWidth:1}]},
+      data:{labels:labels,datasets:[{data:dataValues,backgroundColor:bgColors,borderColor:'#272b30',borderWidth:1}]},
       options:{
         responsive:true,
         plugins:{
-          legend:{display:true,position:'bottom',labels:{color:'#fff',boxWidth:15, padding:10}},
-          tooltip:{callbacks:{
-            label:function(context){ return context.label; }
-          }}
+          legend:{display:false},
+          tooltip:{callbacks:{label:function(context){return context.label+": "+context.raw;}}}
         }
       }
     });
@@ -115,10 +123,6 @@ fetch('data/data.json')
         "<'row'<'col-12'tr>>"+
         "<'row mt-3'<'col-md-5'i><'col-md-7 text-end'p>>",
     language:{search:"Search:",lengthMenu:"Show _MENU_ entries",info:"Showing _START_ to _END_ of _TOTAL_ entries"}
-  });
-
-  table.on('search.dt draw',function(){
-    const filtered=table.rows({filter:'applied'}).data().toArray();
   });
 });
 </script>
