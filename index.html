@@ -14,7 +14,9 @@ body { padding:2rem 0; background:#272b30; }
 .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_length { margin-bottom:0; }
 .dataTables_wrapper .row.mb-3 { display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center; }
 table.dataTable th, table.dataTable td { white-space: nowrap; }
-table.dataTable tbody tr:hover { background-color:#3a4f7a !important; }
+table.dataTable tbody tr:nth-child(odd) { background-color:#2f3842; }
+table.dataTable tbody tr:nth-child(even) { background-color:#32383e; }
+table.dataTable tbody tr:hover { background-color:#3a4f7a !important; color:#fff; }
 .card { box-shadow:0 4px 8px rgba(0,0,0,.3); border:none; border-radius:.5rem; background:#32383e; color:#fff; }
 .chart-card { display:flex; flex-direction:column; border-radius:.5rem; box-shadow:0 4px 8px rgba(0,0,0,.3); background:#32383e; color:#fff; height:100%; }
 .chart-card-header { font-weight:bold; padding:.5rem 1rem; border-bottom:1px solid rgba(255,255,255,.1); }
