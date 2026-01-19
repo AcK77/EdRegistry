@@ -39,9 +39,9 @@ table.dataTable thead {
   border:none;
 }
 table.dataTable tbody tr { border:none; }
-table.dataTable tbody tr:nth-child(odd) { background-color:#272b30; }
-table.dataTable tbody tr:nth-child(even) { background-color:rgba(var(--bs-emphasis-color-rgb: 0, 0, 0;), 0.1); }
-table.dataTable tbody tr:hover { background-color:rgba(255, 255, 255, 0.075); }
+table.dataTable tbody tr:nth-child(odd) { background-color:#272b30 !important; }
+table.dataTable tbody tr:nth-child(even) { background-color:rgba(0, 0, 0, 0.1) !important; }
+table.dataTable tbody tr:hover { background-color:rgba(255, 255, 255, 0.075) !important; }
 table.dataTable th, table.dataTable td { border:none !important; }
 .dataTables_wrapper .dataTables_filter input,
 .dataTables_wrapper .dataTables_length select {
@@ -68,7 +68,7 @@ Explore file types, categories, and structures with search and filtering tools.
 
 <div class="card mt-4">
   <div class="card-body">
-    <table id="datatable" class="table table-striped table-hover table-bordered w-100">
+    <table id="datatable" class="table table-striped table-hover w-100">
       <thead></thead>
     </table>
   </div>
