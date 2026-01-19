@@ -1,7 +1,0 @@
-.table-container table.dataTable tbody tr:hover {
-  background-color: #e0f2fe !important; /* Tailwind sky-100 */
-}
-.table-container table.dataTable thead th {
-  background-color: #0ea5e9 !important; /* Tailwind sky-500 */
-  color: white !important;
-}
