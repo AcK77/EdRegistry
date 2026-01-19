@@ -11,12 +11,6 @@ body { padding:2rem 0; background:#272b30; }
 .container-custom { max-width:94vw; margin:auto; }
 .description-text { font-size:1rem; opacity:.85; line-height:1.5; background:#32383e; padding:1rem; border-radius:.5rem; box-shadow:0 4px 8px rgba(0,0,0,.3); }
 .title-white { color:#fff; }
-.dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_length { margin-bottom:0; }
-.dataTables_wrapper .row.mb-3 { display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center; }
-table.dataTable th, table.dataTable td { white-space: nowrap; }
-table.dataTable tbody tr:nth-child(odd) { background-color:#2f3842; }
-table.dataTable tbody tr:nth-child(even) { background-color:#32383e; }
-table.dataTable tbody tr:hover { background-color:#3a4f7a !important; color:#fff; }
 .card { box-shadow:0 4px 8px rgba(0,0,0,.3); border:none; border-radius:.5rem; background:#32383e; color:#fff; }
 .chart-card { display:flex; flex-direction:column; border-radius:.5rem; box-shadow:0 4px 8px rgba(0,0,0,.3); background:#32383e; color:#fff; height:100%; }
 .chart-card-header { font-weight:bold; padding:.5rem 1rem; border-bottom:1px solid rgba(255,255,255,.1); }
@@ -26,6 +20,17 @@ canvas { width:200px !important; height:200px !important; }
 .chart-card-footer span.count { font-style:italic; font-size:.7rem; color:#999; margin-left:2px; }
 footer { margin-top:4rem; padding-top:1rem; border-top:1px solid #445; font-size:.9rem; opacity:.8; }
 footer a { color:#fff; text-decoration:underline; }
+
+/* Tableau DataTables Slate */
+table.dataTable { background-color:#32383e; color:#fff; }
+table.dataTable thead { background-color:#2c3e50; color:#fff; }
+table.dataTable tbody tr { background-color:#32383e; }
+table.dataTable tbody tr:nth-child(odd) { background-color:#2f3842; }
+table.dataTable tbody tr:hover { background-color:#3a4f7a !important; color:#fff !important; }
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select { background-color:#2f3842; color:#fff; border:1px solid #445; }
+.dataTables_wrapper .dataTables_filter input:focus,
+.dataTables_wrapper .dataTables_length select:focus { outline:none; box-shadow:0 0 0 0.2rem rgba(0,123,255,.25); }
 </style>
 </head>
 <body>
