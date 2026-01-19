@@ -1,59 +1,75 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EdRegistry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      plugins: [daisyui],
-      daisyui: {
-        themes: ["light", "dark"]
-      }
+  <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      padding: 2rem;
     }
-  </script>
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.7/dist/full.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
-  <link rel="stylesheet" href="assets/table.css">
 
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_length {
+      margin-bottom: 1rem;
+    }
+
+    table.dataTable tbody tr:hover {
+      background-color: #375a7f !important;
+    }
+  </style>
 </head>
-<body class="bg-base-100 text-base-content">
+<body>
 
-  <div class="flex justify-between items-center p-4 border-b border-base-300">
-    <h1 class="text-3xl font-bold">EdRegistry</h1>
-    <button onclick="toggleTheme()" class="btn btn-outline btn-sm">
-      🌓 Toggle Dark
-    </button>
+  <h1 class="mb-4">EdRegistry</h1>
+
+  <div class="alert alert-secondary">
+    Interactive registry of EdFiles from LEGO TTGames
   </div>
 
-  <div id="loader" class="flex justify-center items-center h-64">
-    <span class="loading loading-spinner text-primary text-4xl"></span>
-    <span class="ml-4 text-lg font-semibold">Loading data...</span>
+  <div class="card">
+    <div class="card-body">
+      <table id="datatable" class="table table-striped table-hover w-100">
+        <thead></thead>
+      </table>
+    </div>
   </div>
-
-  <div id="stats" class="hidden mx-4 my-4 p-4 bg-base-200 rounded shadow">
-    <h2 class="text-xl font-semibold mb-2">📊 Statistics</h2>
-    <p>Total rows: <span id="stats-total">0</span></p>
-    <p>Filtered rows: <span id="stats-filtered">0</span></p>
-
-    <h3 class="text-lg font-semibold mt-2">Top values (column 1)</h3>
-    <ul id="stats-top" class="list-disc ml-5"></ul>
-  </div>
-
-  <div class="table-container mx-4 my-4 p-4 bg-base-200 rounded shadow overflow-x-auto hidden" id="table-container">
-    <table id="datatable" class="stripe hover w-full" style="width:100%">
-      <thead></thead>
-      <tfoot></tfoot>
-    </table>
-  </div>
-
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
   <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
-  <script src="assets/dark.js"></script>
-  <script src="assets/table.js"></script>
+  <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+
+  <script>
+    fetch('data/data.json')
+      .then(res => res.json())
+      .then(data => {
+        const columns = Object.keys(data[0]).map(k => ({
+          title: k,
+          data: k
+        }));
+
+        $('#datatable').DataTable({
+          data: data,
+          columns: columns,
+          pageLength: 25,
+          deferRender: true,
+          scrollY: '65vh',
+          scrollX: true,
+          scroller: true,
+          order: [],
+          language: {
+            search: "Search:",
+            lengthMenu: "Show _MENU_ entries"
+          }
+        });
+      });
+  </script>
 
 </body>
 </html>
